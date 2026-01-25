@@ -7,6 +7,8 @@ struct ContactRoutes {
         contact.get(use: ContactViewModel.getData)
         
         contact.grouped(try SimpleBasicAuthMiddleware())
+               .grouped(DecryptionMiddleware())
+               .grouped(EncryptionResponseMiddleware())
                .post("appointment", use: ContactViewModel.createAppointment)
     }
 }

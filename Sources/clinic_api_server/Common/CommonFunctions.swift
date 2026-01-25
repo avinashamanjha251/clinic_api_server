@@ -48,3 +48,42 @@ class CommonFunctions {
     }
     
 }
+
+extension Date {
+    
+    // MARK:- DATE FORMAT ENUM
+    //==========================
+    enum DateFormat : String {
+        case ddMMyyyy = "ddMMyyyy"
+    }
+}
+
+extension Date {
+    func toMillis() -> Double {
+        return Double(self.timeIntervalSince1970 * 1000).rounded()
+    }
+}
+
+extension String {
+    
+    func toDate(format: Date.DateFormat,
+                timeZone: TimeZone = TimeZone.current) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format.rawValue
+        dateFormatter.locale = .autoupdatingCurrent
+        let date = dateFormatter.date(from: self)
+        return date
+    }
+    
+    ///Converts a given Date into String based on the date format and timezone provided
+    func toDateString(inFormat: Date.DateFormat,
+                      outFormat: Date.DateFormat,
+                      timeZone: TimeZone = TimeZone.current) -> String {
+        let date = self.toDate(format: inFormat) ?? Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = .autoupdatingCurrent
+        dateFormatter.dateFormat = outFormat.rawValue
+        let finalString = dateFormatter.string(from: date)
+        return finalString
+    }
+}

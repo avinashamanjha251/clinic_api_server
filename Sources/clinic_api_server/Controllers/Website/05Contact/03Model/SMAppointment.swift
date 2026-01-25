@@ -1,7 +1,7 @@
 import Vapor
-import MongoDBVapor
+@preconcurrency import MongoDBVapor
 
-final class CMAppointment: MongoSchemaModel, Content {
+struct SMAppointment: MongoSchemaModel, Content {
     static var collectionName = "appointments"
     
     var _id: BSONObjectID?
@@ -12,12 +12,21 @@ final class CMAppointment: MongoSchemaModel, Content {
     let phone: String
     let service: String
     let message: String
-    var preferredDate: Date
+    var preferredDate: String
     var preferredTime: String
     var status: String // pending, confirmed, cancelled
-    let createdAt: Date
+    let createdAt: Double
     
-    init(id: BSONObjectID? = nil, name: String, email: String?, phone: String, service: String, message: String, preferredDate: Date, preferredTime: String, status: String = "pending", createdAt: Date = Date()) {
+    init(id: BSONObjectID? = nil,
+         name: String,
+         email: String?,
+         phone: String,
+         service: String,
+         message: String,
+         preferredDate: String,
+         preferredTime: String,
+         status: String = "pending",
+         createdAt: Double = Date().toMillis()) {
         self._id = id
         self.name = name
         self.email = email

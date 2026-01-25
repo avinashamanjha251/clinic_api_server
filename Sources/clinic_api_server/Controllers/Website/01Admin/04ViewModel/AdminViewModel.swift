@@ -2,7 +2,7 @@ import Vapor
 import MongoDBVapor
 
 struct AdminViewModel: AdminViewModelProtocol {
-    static let base = BaseMongoViewModel<CMAppointment>()
+    static let base = BaseMongoViewModel<SMAppointment>()
     
     static func fetchAppointmentsList(req: Request) async throws -> Response {
         let page = req.query[Int.self, at: "page"] ?? 1

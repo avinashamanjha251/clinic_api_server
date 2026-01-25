@@ -2,7 +2,7 @@ import Vapor
 import MongoDBVapor
 
 struct ContactViewModel: ContactViewModelProtocol {
-    static let baseViewModel = BaseMongoViewModel<CMAppointment>()
+    static let baseViewModel = BaseMongoViewModel<SMAppointment>()
     
     static func getData(_ req: Request) async throws -> Response {
         let data = SMContactResponse(
@@ -90,13 +90,13 @@ struct ContactViewModel: ContactViewModelProtocol {
         try AppointmentValidator.validate(req)
         
         // 2. Decode
-        let input = try req.content.decode(SMCreateAppointmentRequest.self)
+        let input = try req.decodeContent(SMCreateAppointmentRequest.self)
         
         // 3. Fraud Detection
         try FraudDetectionService.inspectCreate(payload: input, request: req)
         
         // 4. Create Model
-        let appointment = CMAppointment(
+        let appointment = SMAppointment(
             name: input.name,
             email: input.email,
             phone: input.phone,
@@ -112,7 +112,9 @@ struct ContactViewModel: ContactViewModelProtocol {
         // 6. Send Email (Stub)
         EmailService.sendConfirmationStub(to: input.email ?? "")
         
-        return await ResponseHandler.success(message: "Appointment request received", data: nil as ResponseHandler.EmptyData?, on: req)
+        return await ResponseHandler.success(message: "Appointment request received",
+                                             data: nil as ResponseHandler.EmptyData?,
+                                             on: req)
     }
 }
 
@@ -123,6 +125,6 @@ struct SMCreateAppointmentRequest: Content {
     let phone: String
     let service: String
     let message: String
-    let preferredDate: Date
+    let preferredDate: String
     let preferredTime: String
 }

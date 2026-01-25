@@ -14,5 +14,4 @@ func routes(_ app: Application) throws {
     try HomeRoutes.configure(api)
     try ServicesRoutes.configure(api)
     try AboutRoutes.configure(api)
-    try ContactRoutes.configure(api)
 }
