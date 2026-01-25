@@ -22,6 +22,10 @@ enum EnvironmentKey: String {
     case JWT_SECRET = "JWT_SECRET"
     case MONGO_DB_NAME_DEV = "MONGO_DB_NAME_DEV"
     case MONGO_DB_NAME_PROD = "MONGO_DB_NAME_PROD"
+    case SMTP_HOSTNAME = "SMTP_HOSTNAME"
+    case SMTP_PORT = "SMTP_PORT"
+    case SMTP_USERNAME = "SMTP_USERNAME"
+    case SMTP_PASSWORD = "SMTP_PASSWORD"
 }
 
 extension Application {

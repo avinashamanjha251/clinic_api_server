@@ -110,7 +110,7 @@ struct ContactViewModel: ContactViewModelProtocol {
         try await baseViewModel.createDocument(appointment, on: req)
         
         // 6. Send Email (Stub)
-        EmailService.sendConfirmationStub(to: input.email ?? "")
+        EmailService.sendConfirmationStub(appointment: appointment, req: req)
         
         return await ResponseHandler.success(message: "Appointment request received",
                                              data: nil as ResponseHandler.EmptyData?,

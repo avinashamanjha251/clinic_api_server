@@ -78,7 +78,7 @@ struct AdminViewModel: AdminViewModelProtocol {
         
         // Send email if confirmed
         if input.status == "confirmed" {
-             EmailService.sendConfirmationStub(to: item.email ?? "")
+//             EmailService.sendConfirmationStub(appointment: input, req: req)
         }
         
         return await ResponseHandler.success(message: "Status updated", data: nil as ResponseHandler.EmptyData?, on: req)

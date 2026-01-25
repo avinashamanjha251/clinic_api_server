@@ -1,4 +1,5 @@
 import Vapor
+import Smtp
 
 struct AppointmentValidator {
     static func validate(_ req: Request) throws {
@@ -20,8 +21,3 @@ struct AppointmentValidator {
     }
 }
 
-struct EmailService {
-    static func sendConfirmationStub(to: String) {
-        // e.g. print("Sending email to \(to)")
-    }
-}
