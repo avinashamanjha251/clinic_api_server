@@ -1,14 +1,20 @@
 import Vapor
 
 struct HomeViewModel: HomeViewModelProtocol {
-    private static func getData() -> SMHomeInfoResponse {
+    static func getData() -> SMHomeInfoResponse {
+        let header = getHeader(activeUrl: "./")
         let hero = getHeroSection()
         let features = getFeatureSection()
         let services = getServiceSection()
+        let contact = getContactSection()
+        let footer = getFooter()
         
-        return SMHomeInfoResponse(hero: hero,
+        return SMHomeInfoResponse(header: header,
+                                  hero: hero,
                                   features: features,
-                                  services: services)
+                                  services: services,
+                                  contact_info: contact,
+                                  footer: footer)
     }
 
     static func getInfo(req: Request) async throws -> Response {
@@ -114,5 +120,56 @@ struct HomeViewModel: HomeViewModelProtocol {
                 slug: "emergency-care"
             )
         ]
+    }
+    
+    static func getHeader(activeUrl: String) -> SMHeader {
+        return SMHeader(
+            brand_name: "Monalisha Dental Care and OPG Centre",
+            tagline: "Your Smile, Our Priority",
+            nav_links: [
+                .init(text: "Home", url: "./", is_active: activeUrl == "./"),
+                .init(text: "Services", url: "services", is_active: activeUrl == "services"),
+                .init(text: "About", url: "about", is_active: activeUrl == "about"),
+                .init(text: "Contact", url: "contact", is_active: activeUrl == "contact")
+            ],
+            action_button_text: "Book Appointment",
+            action_button_link: "contact"
+        )
+    }
+
+    private static func getContactSection() -> SMHomeInfoResponse.SMContactSection {
+        return SMHomeInfoResponse.SMContactSection(
+            section_title: "Visit Our Clinic",
+            items: [
+                .init(title: "📍 Location", content: "Bhagwati Smriti, Ward Number 31\nJune Bandh, Deoghar", subtitle: nil, link: nil, icon: "📍"),
+                .init(title: "📞 Phone", content: "+91 7050554772", subtitle: "Tap to call", link: "tel:7050554772", icon: "📞"),
+                .init(title: "🕐 Hours", content: "Monday - Sunday: 10:00 AM - 09:00 PM\nEmergency consultations available", subtitle: nil, link: nil, icon: "🕐"),
+                .init(title: "✉️ Email", content: "avinashamanjha.portfolio@gmail.com", subtitle: nil, link: nil, icon: "✉️")
+            ]
+        )
+    }
+
+    static func getFooter() -> SMFooter {
+        return SMFooter(
+            brand_name: "Monalisha Dental Care and OPG Centre",
+            brand_description: "Providing exceptional dental care with a personal touch. Your oral health is our commitment.",
+            quick_links_title: "Quick Links",
+            quick_links: [
+                .init(text: "Home", url: "./"),
+                .init(text: "Services", url: "services"),
+                .init(text: "About", url: "about"),
+                .init(text: "Contact", url: "contact")
+            ],
+            contact_info_title: "Contact Info",
+            contact_info: .init(
+                phone: "+91 7050554772",
+                phone_link: "tel:7050554772",
+                email: "avinashamanjha.portfolio@gmail.com",
+                email_link: "mailto:avinashamanjha.portfolio@gmail.com",
+                address: "Bhagwati Smriti, Ward Number 31, June Bandh, Deoghar",
+                hours: "Mon-Sun: 10:00 AM - 09:00 PM"
+            ),
+            copyright_text: "© 2026 Monalisha Dental Care and OPG Centre. All rights reserved."
+        )
     }
 }
