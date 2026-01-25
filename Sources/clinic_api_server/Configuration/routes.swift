@@ -11,4 +11,5 @@ func routes(_ app: Application) throws {
     // Register Controller Routes
     try ContactRoutes.configure(api)
     try AdminRoutes.configure(api)
+    try HomeRoutes.configure(api)
 }

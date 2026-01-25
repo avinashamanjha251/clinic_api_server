@@ -1,16 +1,19 @@
 import Vapor
 
 struct HomeViewModel: HomeViewModelProtocol {
-    static func getInfo(req: Request) async throws -> Response {
+    private static func getData() -> SMHomeInfoResponse {
         let hero = getHeroSection()
         let features = getFeatureSection()
         let services = getServiceSection()
         
-        let info = SMHomeInfoResponse(hero: hero,
-                                      features: features,
-                                      services: services)
-        return await ResponseHandler.success(data: info,
-                                             on: req)
+        return SMHomeInfoResponse(hero: hero,
+                                  features: features,
+                                  services: services)
+    }
+
+    static func getInfo(req: Request) async throws -> Response {
+        let info = getData()
+        return await ResponseHandler.success(data: info, on: req)
     }
     
     private static func getHeroSection() -> SMHomeInfoResponse.SMHero {
