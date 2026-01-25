@@ -6,23 +6,23 @@ struct FraudDetectionService {
     // Repeated identical payloads (not easily tracked stateless without a store, but we can verify date sanity).
     // Date misuse.
     
-    static func inspectCreate(payload: Content, request: Request) throws {
+    static func inspectCreate(payload: any Content, request: Request) throws {
        try commonChecks(payload: payload, request: request)
     }
     
-    static func inspectUpdate(payload: Content, request: Request) throws {
+    static func inspectUpdate(payload: any Content, request: Request) throws {
         try commonChecks(payload: payload, request: request)
     }
     
-    static func inspectLog(payload: Content, request: Request) throws {
+    static func inspectLog(payload: any Content, request: Request) throws {
          try commonChecks(payload: payload, request: request)
     }
     
-    static func inspectDelete(payload: Content, request: Request) throws {
+    static func inspectDelete(payload: any Content, request: Request) throws {
          // minimal checks
     }
     
-    private static func commonChecks(payload: Content, request: Request) throws {
+    private static func commonChecks(payload: any Content, request: Request) throws {
         // Inspect for date anomalies if the payload has date fields.
         // Since payload is generic Content, we might need to inspect it as a dictionary or specific type if known.
         // For simplicity, we assume we check known key patterns via reflection or similar, 

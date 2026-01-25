@@ -33,16 +33,6 @@ struct ContactViewModel: ContactViewModelProtocol {
         
         return await ResponseHandler.success(message: "Appointment request received", data: nil as ResponseHandler.EmptyData?, on: req)
     }
-    
-    static func getContactInfo(_ req: Request) async throws -> Response {
-        let info = [
-            "phone": "+91 9876543210",
-            "email": "contact@monalishadental.com",
-            "address": "123 Dental Street, Health City",
-            "emergency": "+91 9123456780"
-        ]
-        return await ResponseHandler.success(data: info, on: req)
-    }
 }
 
 // Request DTO
