@@ -23,12 +23,12 @@ struct EmailService {
                             <h1 style="color: #ffffff; margin: 0; font-size: 24px;">🦷 Monalisha Dental Care and OPG Centre</h1>
                         </div>
                         <div class="status-container" style="text-align: center; margin-top: -15px;">
-                            <div class="status-badge" style="background-color: #27AE60; color: #ffffff; padding: 8px 20px; border-radius: 20px; display: inline-block; font-weight: bold; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">✅ CONFIRMED</div>
+                            <div class="status-badge" style="background-color: #3498DB; color: #ffffff; padding: 8px 20px; border-radius: 20px; display: inline-block; font-weight: bold; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">📝 REQUEST RECEIVED</div>
                         </div>
                         <div class="content" style="padding: 30px 20px;">
                             <div class="greeting" style="font-size: 18px; color: #333333; margin-bottom: 20px;">Dear \(appointment.name),</div>
-                            <p style="color: #333333;">Your dental appointment has been successfully scheduled. We look forward to seeing you!</p>
-                            <div class="details-box" style="background-color: #F8F9FA; border-left: 4px solid #27AE60; padding: 20px; margin-bottom: 25px;">
+                            <p style="color: #333333;">We have received your dental appointment request. Our team will review the details and contact you shortly if any changes are needed.</p>
+                            <div class="details-box" style="background-color: #F8F9FA; border-left: 4px solid #3498DB; padding: 20px; margin-bottom: 25px;">
                                 <div class="details-row" style="margin-bottom: 10px;"><span class="details-label" style="font-weight: bold; color: #666666; width: 120px; display: inline-block;">Patient:</span> <span class="details-value" style="color: #333333;">\(appointment.name)</span></div>
                                 <div class="details-row" style="margin-bottom: 10px;"><span class="details-label" style="font-weight: bold; color: #666666; width: 120px; display: inline-block;">Service:</span> <span class="details-value" style="color: #333333;">\(appointment.service)</span></div>
                                 <div class="details-row" style="margin-bottom: 10px;"><span class="details-label" style="font-weight: bold; color: #666666; width: 120px; display: inline-block;">Date:</span> <span class="details-value" style="color: #333333;">\(appointment.preferredDate)</span></div>
@@ -36,10 +36,11 @@ struct EmailService {
                                 <div class="details-row" style="margin-bottom: 10px;"><span class="details-label" style="font-weight: bold; color: #666666; width: 120px; display: inline-block;">Phone:</span> <span class="details-value" style="color: #333333;">\(appointment.phone)</span></div>
                             </div>
                             <div class="warning-box" style="background-color: #FFF3CD; border: 1px solid #FFEAA7; padding: 15px; border-radius: 4px; color: #856404; font-size: 14px;">
-                                <p style="margin: 0 0 10px 0;"><strong>Important Reminders:</strong></p>
+                                <p style="margin: 0 0 10px 0;"><strong>Important Information:</strong></p>
                                 <div style="margin-left: 10px;">
-                                    • Please arrive 15 minutes before your scheduled time for check-in.<br>
-                                    • If you need to reschedule, please provide at least 24-hour notice.
+                                    • This is a booking request and is subject to availability.<br>
+                                    • If your selected slot is unavailable, our admin may adjust the time during the approval process.<br>
+                                    • Please arrive 15 minutes before your finalized time for check-in.
                                 </div>
                             </div>
                         </div>
@@ -57,8 +58,9 @@ struct EmailService {
                                                          name: "Monalisha Dental Care"),
                                       to: [EmailAddress(address: customerEmail,
                                                         name: appointment.name)],
-                                      subject: "Appointment Confirmation - Monalisha Dental Care",
-                                      body: htmlBody)
+                                      subject: "Appointment Request Received - Monalisha Dental Care",
+                                      body: htmlBody,
+                                      isBodyHtml: true)
                 
                 let config = req.application.smtp.configuration
                 req.logger.info("Attempting to send email via \(config.hostname):\(config.port)")
