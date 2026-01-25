@@ -8,8 +8,17 @@ import MongoDBVapor
 
 extension MongoSchemaModel {
     // Helper to get collection from a request's application
-    static func collection(on app: Application) -> MongoCollection<Self> {
-        app.mongoDB.client.db(Environment.get("MONGO_DB_NAME") ?? "home").collection(Self.collectionName, withType: Self.self)
+    static var dbName: String? {
+        switch environmentType {
+        case .prod:
+            return Environment.get(environmentKey: .MONGO_DB_NAME_PROD)
+        case .dev:
+            return Environment.get(environmentKey: .MONGO_DB_NAME_DEV)
+        }
+    }
+    static func collection(on app: Application) throws -> MongoCollection<Self> {
+        guard let dbName = Self.dbName else { throw Abort(.badRequest, reason: "DB Name not found") }
+        return app.mongoDB.client.db(dbName).collection(Self.collectionName, withType: Self.self)
     }
 }
 

@@ -20,6 +20,8 @@ enum EnvironmentKey: String {
     case MONGODB_URI_PROD = "MONGODB_URI_PROD"
     case MONGODB_URI_DEV = "MONGODB_URI_DEV"
     case JWT_SECRET = "JWT_SECRET"
+    case MONGO_DB_NAME_DEV = "MONGO_DB_NAME_DEV"
+    case MONGO_DB_NAME_PROD = "MONGO_DB_NAME_PROD"
 }
 
 extension Application {
