@@ -15,4 +15,9 @@ enum ApiKey {
     static var message: String { "message" }
     static var objectId: String { "objectId" }
     static var success: String { "Success" }
+    
+    // Admin Registration
+    static var name: String { "name" }
+    static var username: String { "username" }
+    static var password: String { "password" }
 }

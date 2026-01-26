@@ -21,6 +21,8 @@ final class DecryptionMiddleware: AsyncMiddleware {
 //                let requesData = try await request.decodeFromCollectedBody(SMMultipartUploadPayload.self)
 //                let decryptedData = try CommonFunctions.decryptData(data: requesData.data)
 //                request.decryptedBody = decryptedData
+            } else if request.headers.contentType == .json {
+                return try await next.respond(to: request)
             } else {
                 throw Abort(.badRequest,
                             reason: "Data should be encrypted",
