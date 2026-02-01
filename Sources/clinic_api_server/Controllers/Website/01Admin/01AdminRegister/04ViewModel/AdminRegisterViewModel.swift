@@ -8,8 +8,8 @@ struct AdminRegisterViewModel: AdminRegisterProtocol {
     
     static func register(req: Request) async throws -> Response {
         // 1. Decode and validate registration request
-        try SMAdminRegisterRequest.validate(content: req)
         let registerRequest: SMAdminRegisterRequest = try req.decodeContent(SMAdminRegisterRequest.self)
+        try registerRequest.validate()
         
         // Note: Validation is now handled by Validatable protocol
         // - Name: 2-100 characters, not empty
@@ -34,14 +34,40 @@ struct AdminRegisterViewModel: AdminRegisterProtocol {
         let newAdmin = SMAdminUserModel(
             name: registerRequest.name,
             username: registerRequest.username,
-            passwordHash: passwordHash
+            passwordHash: passwordHash,
+            jwtId: UUID().uuidString,
+            accessToken: ""
         )
         
         // 5. Save to database using BaseMongoViewModel
-        try await baseViewModel.createDocument(newAdmin, on: req)
+        guard let value = try await baseViewModel.createDocument(newAdmin,
+                                                                 on: req)?.toBSONDocument else {
+            throw Abort(.internalServerError,
+                        reason: "ADMIN_REGISTRATION_ID_NOT_FOUND",
+                        identifier: "ADMIN_REGISTRATION_ID_NOT_FOUND")
+        }
+        
+        let newValue = try await fetchProfile(byObjectId: value.objectId,
+                                              req: req)
+        guard var newValue,
+              let objectId = newValue._id else {
+            throw Abort(.internalServerError,
+                        reason: "ADMIN_REGISTRATION_PROFILE_NOT_FOUND",
+                        identifier: "ADMIN_REGISTRATION_PROFILE_NOT_FOUND")
+        }
         
         // 6. Generate access token
-        let token = Environment.get(environmentKey: .ENCRYPTION_KEY) ?? "monalisha_admin_token_2026"
+        let token = try req.jwtService.generateToken(for: newAdmin)
+        newValue.accessToken = token
+        
+        try await baseViewModel.updateDocument(objectId: objectId,
+                                               model: newValue,
+                                               on: req,
+                                               ignoredKeys: [ApiKey.id,
+                                                             ApiKey.passwordHash,
+                                                             ApiKey.jwtId])
+        try req.jwtService.verifyAndUpdateRequesthAuth(token: token,
+                                                       request: req)
         
         // 7. Return response with name, username, and access token
         return await ResponseHandler.success(
@@ -53,5 +79,16 @@ struct AdminRegisterViewModel: AdminRegisterProtocol {
             ),
             on: req
         )
+    }
+    
+    static func fetchProfile(byObjectId objectId: String,
+                             req: Request) async throws -> SMAdminUserModel? {
+        let filter: BSONDocument = [ApiKey.id: .objectID(try BSONObjectID(objectId))]
+        if let profile = try await baseViewModel.readOne(filter: filter,
+                                                         on: req) {
+            return profile
+        } else {
+            throw Abort(.notFound, reason: "Admin User not found")
+        }
     }
 }

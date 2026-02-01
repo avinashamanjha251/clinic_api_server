@@ -14,10 +14,6 @@ struct HomeViewModel: HomeViewModelProtocol {
                                   services: services,
                                   contact_info: contact,
                                   footer: footer)
-        print(header)
-        print(hero)
-        print(features)
-        print(data)
         return data
     }
 

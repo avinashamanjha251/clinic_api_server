@@ -1,5 +1,9 @@
 import Vapor
 
+struct AdminAuthKey: StorageKey {
+    typealias Value = Bool
+}
+
 extension Request {
     var clientIP: String {
         // Order: X-Forwarded-For -> X-Real-IP -> Remote Address
@@ -12,7 +16,7 @@ extension Request {
         return remoteAddress?.description ?? "unknown"
     }
     
-    func authenticatedUserId() throws -> String {
+    func authenticateUserId() throws -> String {
         // Simple header check for now
         guard let userId = headers.first(name: "X-User-Id") else {
             throw Abort(.unauthorized, reason: "Missing X-User-Id header")
@@ -79,5 +83,42 @@ extension Request {
         return try decoder.decode(T.self,
                                   from: buffer,
                                   boundary: boundary)
+    }
+}
+
+extension Request {
+    var jwtService: JWTService {
+        application.jwtService
+    }
+
+    /// Get authenticated user ID from JWT
+    var authenticatedUserId: String {
+        get throws {
+            let payload = try auth.require(JWTUserPayload.self)
+            return payload.userId
+        }
+    }
+    
+    /// Check if request is from admin
+    var isAdmin: Bool {
+        storage[AdminAuthKey.self] ?? false
+    }
+    
+    /// Require admin access or throw error
+    func requireAdmin() throws {
+        guard isAdmin else {
+            throw Abort(.forbidden, reason: "Admin access required")
+        }
+    }
+}
+
+extension Request {
+    var mongoManager: MongoManager {
+        get {
+            application.mongoManager
+        }
+        set {
+            application.mongoManager = newValue
+        }
     }
 }

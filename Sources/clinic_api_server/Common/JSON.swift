@@ -496,3 +496,22 @@ extension JSON {
         }
     }
 }
+
+extension Encodable {
+    /// Converts any Codable model to a BSONDocument, optionally ignoring specified keys
+    func toBSONDocument(ignoring ignoredKeys: [String] = []) -> BSONDocument {
+        do {
+            let encoder = BSONEncoder()
+            var document = try encoder.encode(self)
+            
+            // Remove ignored keys
+            for key in ignoredKeys {
+                document[key] = nil
+            }
+            return document
+        } catch {
+            print("Encoding error: \(error)")
+            return BSONDocument()
+        }
+    }
+}

@@ -51,14 +51,19 @@ class URLManager {
     }
     
     static var publicPathList: [EndPoint] {
-        [.uploads, .health, .adminLogin, .adminRegister]
+        [.uploads, .health]
     }
     static var basicAuthPathList: [EndPoint] {
-        [.home, .contact, .services, .about, .createAppointment]
+        [.home, .contact, .services, .about,
+         .createAppointment, .adminLogin, .adminRegister]
     }
     static var jwtPathList: [EndPoint] {
         // Admin routes likely use JWT or similar auth in future, but for now they are under admin group
-        return [.adminAppointmentsList, .adminAppointmentsCalendarSummary, .adminAppointmentsStatus, .adminAppointmentsReschedule, .adminAppointmentsDate]
+        return [.adminAppointmentsList,
+                .adminAppointmentsCalendarSummary,
+            .adminAppointmentsStatus,
+                .adminAppointmentsReschedule,
+                .adminAppointmentsDate]
     }
     static var decryptinonEndpointList: [URLManager.EndPoint] {
         []
@@ -91,8 +96,16 @@ class URLManager {
                 }
             }
         }
-        
         throw Abort(.notFound, reason: "Invalid url")
+    }
+    
+    // Check if request is Admin Auth (Login or Register)
+    static func isAdminAuthRequest(request: Request) -> Bool {
+        guard request.method == .POST,
+              let (_, endpoint) = try? self.from(path: request.url.path) else {
+            return false
+        }
+        return jwtPathList.contains(endpoint)
     }
 }
 

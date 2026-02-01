@@ -8,6 +8,8 @@
 import Foundation
 
 enum ApiKey {
+    static var id: String { "_id" }
+    
     static var requestId: String { "requestId" }
     static var data: String { "data" }
     static var statusCode: String { "statusCode" }
@@ -20,4 +22,6 @@ enum ApiKey {
     static var name: String { "name" }
     static var username: String { "username" }
     static var password: String { "password" }
+    static var passwordHash: String { "passwordHash" }
+    static var jwtId: String { "jwtId" }
 }

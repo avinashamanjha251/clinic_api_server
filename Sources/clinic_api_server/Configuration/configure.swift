@@ -2,6 +2,10 @@ import Vapor
 import MongoDBVapor
 import Smtp
 
+protocol RouteProtocol {
+    static func configure(_ app: Application) throws
+}
+
 public func configure(_ app: Application) async throws {
     switch environmentType {
     case .dev:
@@ -19,7 +23,7 @@ public func configure(_ app: Application) async throws {
     // 2. Security & Middleware Configuration
     // We use a custom error middleware to standardise responses
 //    app.middleware.use(CustomErrorMiddleware())
-    
+    try JWTService.configure(app)
     SecurityConfig.configure(app)
     
     // 3. SMTP Configuration

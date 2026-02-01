@@ -17,8 +17,11 @@ extension MongoSchemaModel {
         }
     }
     static func collection(on app: Application) throws -> MongoCollection<Self> {
-        guard let dbName = Self.dbName else { throw Abort(.badRequest, reason: "DB Name not found") }
-        return app.mongoDB.client.db(dbName).collection(Self.collectionName, withType: Self.self)
+        guard let dbName = Self.dbName else {
+            throw Abort(.badRequest, reason: "DB Name not found")
+        }
+        return app.mongoDB.client.db(dbName).collection(Self.collectionName,
+                                                        withType: Self.self)
     }
 }
 
@@ -27,9 +30,10 @@ class BaseMongoViewModel<Model: MongoSchemaModel> {
     // Generic helpers
     
     // Create
-    func createDocument(_ model: Model, on req: Request) async throws {
-        _ = try await Model.collection(on: req.application)
+    func createDocument(_ model: Model, on req: Request) async throws -> InsertOneResult? {
+        let response = try await Model.collection(on: req.application)
             .insertOne(model)
+        return response
     }
     
     // Read One
@@ -55,9 +59,26 @@ class BaseMongoViewModel<Model: MongoSchemaModel> {
     }
     
     // Update
-    func updateDocument(objectId: BSONObjectID, model: Model, on req: Request) async throws {
-        try await Model.collection(on: req.application)
-            .findOneAndReplace(filter: ["_id": .objectID(objectId)], replacement: model)
+    @discardableResult
+    func update(filter: BSONDocument,
+                to updateDoc: BSONDocument,
+                on req: Request) async throws -> UpdateResult? {
+        try await Model.collection(on: req.application).updateOne(filter: filter,
+                                       update: ["$set": .document(updateDoc)])
+    }
+    
+    @discardableResult
+    func updateDocument(objectId: BSONObjectID,
+                        model: Model,
+                        on req: Request,
+                        ignoredKeys: [String] = []) async throws -> JSON {
+        let rawData = model.toBSONDocument(ignoring: [ApiKey.id])
+        let filter: BSONDocument = [ApiKey.id: .objectID(objectId)]
+        let _ = try await update(filter: filter,
+                                 to: rawData,
+                                 on: req)
+        let jsonData = model.toJSON(ignoring: ignoredKeys)
+        return jsonData
     }
     
     // Delete
@@ -71,5 +92,16 @@ class BaseMongoViewModel<Model: MongoSchemaModel> {
          try await Model.collection(on: req.application)
             .aggregate(pipeline)
             .toArray()
+    }
+}
+
+extension InsertOneResult {
+    var toBSONDocument: JSON {
+        switch insertedID {
+        case .objectID(let objectId):
+            return JSON([ApiKey.objectId: objectId.hex])
+        default:
+            return JSON([ApiKey.objectId: insertedID.stringValue])
+        }
     }
 }

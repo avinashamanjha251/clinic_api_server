@@ -9,7 +9,7 @@ import Vapor
 
 /// Property wrapper that automatically trims whitespace from string values
 @propertyWrapper
-public struct Trimmed: Codable {
+public struct Trimmed: Content {
     private var value: String
     
     public var wrappedValue: String {
