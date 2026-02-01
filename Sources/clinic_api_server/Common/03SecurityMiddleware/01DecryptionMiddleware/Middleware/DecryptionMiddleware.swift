@@ -8,9 +8,10 @@ final class DecryptionMiddleware: AsyncMiddleware {
                  chainingTo next: any AsyncResponder) async throws -> Response {
         switch request.method {
         case .GET:
-            let requesData = try request.query.decode(SMRequestData.self)
-            let decryptedData = try CommonFunctions.decryptData(data: requesData.data)
-            request.decryptedBody = decryptedData
+            return try await next.respond(to: request)
+//            let requesData = try request.query.decode(SMRequestData.self)
+//            let decryptedData = try CommonFunctions.decryptData(data: requesData.data)
+//            request.decryptedBody = decryptedData
         default:
             // Check if request has encrypted data
             if request.headers.contentType == .urlEncodedForm {

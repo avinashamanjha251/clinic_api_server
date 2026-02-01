@@ -5,7 +5,7 @@ import Smtp
 public func configure(_ app: Application) async throws {
     switch environmentType {
     case .dev:
-        break
+        app.http.server.configuration.hostname = "127.0.0.1"
     case .prod:
         app.http.server.configuration.hostname = "0.0.0.0"
     }
@@ -18,7 +18,7 @@ public func configure(_ app: Application) async throws {
     
     // 2. Security & Middleware Configuration
     // We use a custom error middleware to standardise responses
-    app.middleware.use(CustomErrorMiddleware())
+//    app.middleware.use(CustomErrorMiddleware())
     
     SecurityConfig.configure(app)
     

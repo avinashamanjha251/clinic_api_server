@@ -1,14 +1,8 @@
 import Vapor
 
 struct ContactRoutes {
-    static func configure(_ r: RoutesBuilder) throws {
-        let contact = r.grouped("contact")
-        
-        contact.get(use: ContactViewModel.getData)
-        
-        contact.grouped(try SimpleBasicAuthMiddleware())
-               .grouped(DecryptionMiddleware())
-               .grouped(EncryptionResponseMiddleware())
-               .post("appointment", use: ContactViewModel.createAppointment)
+    static func configure(_ route: RoutesBuilder) throws {
+        route.get(path: .contact) { try await ContactViewModel.getData($0) }
+        route.post(path: .createAppointment) { try await ContactViewModel.createAppointment($0) }
     }
 }

@@ -8,13 +8,17 @@ struct HomeViewModel: HomeViewModelProtocol {
         let services = getServiceSection()
         let contact = getContactSection()
         let footer = getFooter()
-        
-        return SMHomeInfoResponse(header: header,
+        let data = SMHomeInfoResponse(header: header,
                                   hero: hero,
                                   features: features,
                                   services: services,
                                   contact_info: contact,
                                   footer: footer)
+        print(header)
+        print(hero)
+        print(features)
+        print(data)
+        return data
     }
 
     static func getInfo(req: Request) async throws -> Response {

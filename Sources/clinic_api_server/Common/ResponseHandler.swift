@@ -1,6 +1,6 @@
 import Vapor
 
-struct ResponseHandler {
+struct ResponseHandler: Content {
     struct ResponseData<T: Content>: Content {
         let success: Bool
         let message: String
