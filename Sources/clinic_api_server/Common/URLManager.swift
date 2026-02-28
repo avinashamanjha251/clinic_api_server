@@ -32,6 +32,7 @@ class URLManager {
         // Admin Auth
         case adminRegister = "admin/register"
         case adminLogin = "admin/auth/login"
+        case adminLogout = "admin/auth/logout"
         
         // Admin Dashboard / Appointments
         case adminAppointmentsList = "admin/appointments/list"
@@ -63,7 +64,8 @@ class URLManager {
                 .adminAppointmentsCalendarSummary,
             .adminAppointmentsStatus,
                 .adminAppointmentsReschedule,
-                .adminAppointmentsDate]
+                .adminAppointmentsDate,
+                .adminLogout]
     }
     static var decryptinonEndpointList: [URLManager.EndPoint] {
         []
@@ -72,7 +74,7 @@ class URLManager {
         let dict: [HTTPMethod: [URLManager.EndPoint]] = [
             .GET: [.health, .uploads, .contact, .services, .about,
                    .adminAppointmentsList, .adminAppointmentsCalendarSummary, .adminAppointmentsDate],
-            .POST: [.createAppointment, .adminRegister, .adminLogin,
+            .POST: [.createAppointment, .adminRegister, .adminLogin, .adminLogout,
                     .adminAppointmentsStatus, .adminAppointmentsReschedule],
             .PUT: [],
             .DELETE: []

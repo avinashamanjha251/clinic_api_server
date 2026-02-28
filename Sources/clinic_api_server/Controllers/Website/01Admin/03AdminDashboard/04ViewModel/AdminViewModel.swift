@@ -41,8 +41,7 @@ struct AdminViewModel: AdminViewModelProtocol {
         */
         
         let pipeline: [BSONDocument] = [
-            ["$project": ["dateStr": ["$dateToString": ["format": "%Y-%m-%d", "date": "$preferredDate"]]]],
-            ["$group": ["_id": "$dateStr", "count": ["$sum": 1]]]
+            ["$group": ["_id": "$preferredDate", "count": ["$sum": 1]]]
         ]
         
         let results = try await base.aggregate(pipeline: pipeline, on: req)
@@ -112,16 +111,13 @@ struct AdminViewModel: AdminViewModelProtocol {
         // We'll use our helper or assume Exact Match if we stored just Date (but we usually store Time)
         // Range query: date >= start AND date < end
         
-        guard let start = AdminHelpers.parseDate(dateStr),
-              let end = Calendar.current.date(byAdding: .day, value: 1, to: start) else {
+        guard let _ = AdminHelpers.parseDate(dateStr) else {
              throw Abort(.badRequest, reason: "Invalid date format")
         }
         
+        // preferredDate is stored as a string "YYYY-MM-DD"
         let filter: BSONDocument = [
-            "preferredDate": [
-                "$gte": .datetime(start),
-                "$lt": .datetime(end)
-            ]
+            "preferredDate": .string(dateStr)
         ]
         
         let items = try await base.readFilteredRawData(filters: filter, on: req)
