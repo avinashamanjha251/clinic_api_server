@@ -21,7 +21,7 @@ struct SMAdminRegisterRequest: Content, Validatable {
         // Password validation
         validations.add(apiKey: ApiKey.password,
                         as: String.self,
-                        is: !.empty && .count(6...100),
-                        customFailureDescription: AdminRegistrationError.passwordNotAllowedToBeEmpty)
+                        is: !.empty && .strongPassword && .count(8...100),
+                        customFailureDescription: AdminRegistrationError.passwordInvalidFormat)
     }
 }

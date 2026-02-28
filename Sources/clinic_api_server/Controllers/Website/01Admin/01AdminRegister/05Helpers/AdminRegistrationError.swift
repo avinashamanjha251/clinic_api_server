@@ -18,6 +18,7 @@ enum AdminRegistrationError {
     static var usernameInvalidFormat: String { "Username can only contain letters, numbers, and underscores" }
     
     static var passwordNotAllowedToBeEmpty: String { "Password is required and cannot be empty" }
-    static var passwordTooShort: String { "Password must be at least 6 characters long" }
+    static var passwordTooShort: String { "Password must be at least 8 characters long" }
     static var passwordTooLong: String { "Password cannot exceed 100 characters" }
+    static var passwordInvalidFormat: String { "Password must be at least 8 characters long, and contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character" }
 }
