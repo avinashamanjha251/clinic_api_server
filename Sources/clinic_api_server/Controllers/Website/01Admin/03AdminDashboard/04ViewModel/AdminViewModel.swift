@@ -19,9 +19,10 @@ struct AdminViewModel: AdminViewModelProtocol {
             limit: perPage,
             on: req
         )
-        
         return await ResponseHandler.success(
-            data: SMAdminAppointmentListResponse(items: items, page: page, hasMore: items.count == perPage),
+            data: SMAdminAppointmentListResponse(items: items,
+                                                 page: page,
+                                                 hasMore: items.count == perPage),
             on: req
         )
     }
@@ -62,7 +63,7 @@ struct AdminViewModel: AdminViewModelProtocol {
     }
     
     static func updateStatus(req: Request) async throws -> Response {
-        let input = try req.content.decode(SMUpdateStatusRequest.self)
+        let input = try req.decodeContent(SMUpdateStatusRequest.self)
         guard let objId = try? BSONObjectID(input.appointmentId) else {
              throw Abort(.badRequest, reason: "Invalid ID")
         }
@@ -80,11 +81,13 @@ struct AdminViewModel: AdminViewModelProtocol {
 //             EmailService.sendConfirmationStub(appointment: input, req: req)
         }
         
-        return await ResponseHandler.success(message: "Status updated", data: nil as ResponseHandler.EmptyData?, on: req)
+        return await ResponseHandler.success(message: "Status updated",
+                                             data: nil as ResponseHandler.EmptyData?,
+                                             on: req)
     }
     
     static func rescheduleAppointment(req: Request) async throws -> Response {
-        let input = try req.content.decode(SMRescheduleRequest.self)
+        let input = try req.decodeContent(SMRescheduleRequest.self)
         guard let objId = try? BSONObjectID(input.appointmentId) else {
              throw Abort(.badRequest, reason: "Invalid ID")
         }
