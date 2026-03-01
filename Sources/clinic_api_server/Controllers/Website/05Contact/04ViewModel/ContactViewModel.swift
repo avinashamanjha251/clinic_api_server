@@ -55,9 +55,9 @@ struct ContactViewModel: ContactViewModelProtocol {
             map_section: .init(
                 title: "Find Us",
                 content: .init(
-                    title: "🗺️ Interactive Map",
+                    title: "📍 Our Location",
                     address: "Bhagwati Smriti, Ward Number 31, June Bandh, Deoghar",
-                    note: "In a real implementation, this would show an embedded Google Map or similar mapping service.",
+                    note: "Visit us for the best dental care experience in Deoghar.",
                     features: [
                         "🅿️ Free Parking",
                         "🚌 Public Transit Nearby"
