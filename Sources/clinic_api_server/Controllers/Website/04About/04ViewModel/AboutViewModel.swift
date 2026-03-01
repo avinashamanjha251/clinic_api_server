@@ -57,49 +57,49 @@ struct AboutViewModel: AboutViewModelProtocol {
                 title: "Meet Our Team",
                 members: [
                     .init(
-                        photo_placeholder: "👨⚕️",
-                        name: "Dr. Sarah Johnson",
-                        role: "Lead Dentist & Founder",
-                        bio: "Dr. Johnson brings over 15 years of experience in general and cosmetic dentistry. She graduated from the University of Dental Medicine and has completed advanced training in implant dentistry and smile design.",
+                        photo_placeholder: "https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsb2ZmaWNlMV9waG90b2dyYXBoeV9vZl9hbl9zb3V0aF9pbmRpYW5fd29tZW5fYXNfYV9kb2N0b19kMzAxMDM3Zi03MDUzLTQxNDAtYmYyZS1lZDFlYWE0YTM3NDRfMS5qcGc.jpg",
+                        name: "Dr. Poonam Pratibha",
+                        role: "BDS, MIDA and founder",
+                        bio: "Experienced in general and cosmetic dentistry. Graduated from CCS University, done 1 year rotatory internship from Patna Dental College And Hospital, and completed advance training in smile design and aligners.",
                         credentials: [
-                            "DDS, University of Dental Medicine",
-                            "Advanced Implant Certification",
-                            "Cosmetic Dentistry Specialist"
+                            "BDS, CCS University",
+                            "MIDA",
+                            "Advance training in smile design and aligners"
                         ]
                     ),
-                    .init(
-                        photo_placeholder: "👨⚕️",
-                        name: "Dr. Michael Chen",
-                        role: "Associate Dentist",
-                        bio: "Dr. Chen specializes in restorative and pediatric dentistry. His gentle approach and expertise with children make him a favorite among our younger patients and their families.",
-                        credentials: [
-                            "DDS, State University School of Dentistry",
-                            "Pediatric Dentistry Fellowship",
-                            "Sedation Dentistry Certified"
-                        ]
-                    ),
-                    .init(
-                        photo_placeholder: "👩⚕️",
-                        name: "Lisa Martinez, RDH",
-                        role: "Lead Dental Hygienist",
-                        bio: "Lisa has been with our practice for 8 years and is passionate about preventive care and patient education. She helps patients develop effective oral hygiene routines for long-term dental health.",
-                        credentials: [
-                            "RDH, Community College Dental Program",
-                            "Local Anesthesia Administration",
-                            "Continuing Education in Periodontal Therapy"
-                        ]
-                    ),
-                    .init(
-                        photo_placeholder: "👩💼",
-                        name: "Emma Thompson",
-                        role: "Practice Manager",
-                        bio: "Emma ensures smooth operations and exceptional patient experiences. She coordinates appointments, manages insurance claims, and helps patients navigate their treatment options.",
-                        credentials: [
-                            "Healthcare Administration Degree",
-                            "Dental Practice Management Certified",
-                            "5+ Years in Dental Administration"
-                        ]
-                    )
+//                    .init(
+//                        photo_placeholder: "👨⚕️",
+//                        name: "Dr. Michael Chen",
+//                        role: "Associate Dentist",
+//                        bio: "Dr. Chen specializes in restorative and pediatric dentistry. His gentle approach and expertise with children make him a favorite among our younger patients and their families.",
+//                        credentials: [
+//                            "DDS, State University School of Dentistry",
+//                            "Pediatric Dentistry Fellowship",
+//                            "Sedation Dentistry Certified"
+//                        ]
+//                    ),
+//                    .init(
+//                        photo_placeholder: "👩⚕️",
+//                        name: "Lisa Martinez, RDH",
+//                        role: "Lead Dental Hygienist",
+//                        bio: "Lisa has been with our practice for 8 years and is passionate about preventive care and patient education. She helps patients develop effective oral hygiene routines for long-term dental health.",
+//                        credentials: [
+//                            "RDH, Community College Dental Program",
+//                            "Local Anesthesia Administration",
+//                            "Continuing Education in Periodontal Therapy"
+//                        ]
+//                    ),
+//                    .init(
+//                        photo_placeholder: "👩💼",
+//                        name: "Emma Thompson",
+//                        role: "Practice Manager",
+//                        bio: "Emma ensures smooth operations and exceptional patient experiences. She coordinates appointments, manages insurance claims, and helps patients navigate their treatment options.",
+//                        credentials: [
+//                            "Healthcare Administration Degree",
+//                            "Dental Practice Management Certified",
+//                            "5+ Years in Dental Administration"
+//                        ]
+//                    )
                 ]
             ),
             facility: .init(
