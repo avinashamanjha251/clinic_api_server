@@ -111,8 +111,16 @@ class URLManager {
     }
 }
 
+#if swift(>=6.0)
 extension HTTPMethod: @retroactive Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.rawValue)
     }
 }
+#else
+extension HTTPMethod: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.rawValue)
+    }
+}
+#endif
