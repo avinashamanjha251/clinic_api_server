@@ -17,28 +17,28 @@ struct ContactViewModel: ContactViewModelProtocol {
                 items: [
                     .init(
                         title: "Phone",
-                        content: "+91 7050554772",
-                        link: "tel:7050554772",
+                        content: AppConfig.phoneNumber,
+                        link: AppConfig.phoneLink,
                         icon: "📞",
                         subtitle: "Mon-Sun, 9am - 9pm"
                     ),
                     .init(
                         title: "Email",
-                        content: "avinashamanjha.portfolio@gmail.com",
-                        link: "mailto:avinashamanjha.portfolio@gmail.com",
+                        content: AppConfig.contactEmail,
+                        link: "mailto:\(AppConfig.contactEmail)",
                         icon: "✉️",
                         subtitle: "We reply within 24 hours"
                     ),
                     .init(
                         title: "Location",
-                        content: "Bhagwati Smriti, Ward Number 31, June Bandh, Deoghar",
+                        content: AppConfig.address,
                         link: nil,
                         icon: "📍",
                         subtitle: "Free parking available"
                     ),
                     .init(
                         title: "Hours",
-                        content: "Mon - Sun: 10:00 AM - 09:00 PM\n24/7 Emergency Care",
+                        content: "\(AppConfig.hours)\n24/7 Emergency Care",
                         link: nil,
                         icon: "🕐",
                         subtitle: nil
@@ -47,8 +47,8 @@ struct ContactViewModel: ContactViewModelProtocol {
                 emergency_card: .init(
                     title: "🚨 Dental Emergency?",
                     description: "If you're experiencing a dental emergency after hours, please call our emergency line:",
-                    phone: "+91 7050554772",
-                    phone_link: "tel:7050554772",
+                    phone: AppConfig.emergencyContact,
+                    phone_link: "tel:\(AppConfig.emergencyContact.replacingOccurrences(of: " ", with: ""))",
                     subtitle: "Available 24/7 for dental emergencies - Tap to call"
                 )
             ),
@@ -56,7 +56,7 @@ struct ContactViewModel: ContactViewModelProtocol {
                 title: "Find Us",
                 content: .init(
                     title: "📍  Our Location",
-                    address: "Bhagwati Smriti, Ward Number 31, June Bandh, Deoghar",
+                    address: AppConfig.address,
                     note: "Visit us for the best dental care experience in Deoghar.",
                     features: [
                         "🅿️ Free Parking",

@@ -99,12 +99,12 @@
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "SMTP_USERNAME"
-            value = "avinashamanjha.portfolio@gmail.com"
+            value = "monalishadentalcareandopgcentr@gmail.com"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "SMTP_PASSWORD"
-            value = "fefz szpl jovu bwat"
+            value = "kqka pshs rsmg lyog"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable

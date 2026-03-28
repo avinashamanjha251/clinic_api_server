@@ -7,7 +7,7 @@ set -e
 
 DOMAIN_NAME="monalishadentalcare.com"  # Replace with your Hostinger domain
 AWS_IP="3.6.173.209"
-EMAIL="avinashamanjha.portfolio@gmail.com"
+EMAIL="monalishadentalcareandopgcentr@gmail.com"
 
 echo "🌐 Hostinger Domain + SSL Setup"
 echo "==============================="

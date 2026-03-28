@@ -25,7 +25,7 @@ struct HomeViewModel: HomeViewModelProtocol {
     private static func getHeroSection() -> SMHomeInfoResponse.SMHero {
         return SMHomeInfoResponse
             .SMHero(
-                title: "Welcome to Monalisha Dental Care and OPG Centre",
+                title: "Welcome to \(AppConfig.brandName)",
                 description: "Experience exceptional dental care with our team of experienced professionals. We provide comprehensive dental services in a comfortable, modern environment.",
                 buttons: [
                     .init(
@@ -50,7 +50,7 @@ struct HomeViewModel: HomeViewModelProtocol {
     private static func getFeatureSection() -> SMHomeInfoResponse.SMFeatureSection {
         return SMHomeInfoResponse
             .SMFeatureSection(
-                section_title: "Why Choose Monalisha Dental Care and OPG Centre?",
+                section_title: "Why Choose \(AppConfig.brandName)?",
                 items: [
                     .init(
                         title: "Experienced Professionals",
@@ -124,8 +124,8 @@ struct HomeViewModel: HomeViewModelProtocol {
     
     static func getHeader(activeUrl: String) -> SMHeader {
         return SMHeader(
-            brand_name: "Monalisha Dental Care and OPG Centre",
-            tagline: "Your Smile, Our Priority",
+            brand_name: AppConfig.brandName,
+            tagline: AppConfig.tagline,
             nav_links: [
                 .init(text: "Home", url: "./", is_active: activeUrl == "./"),
                 .init(text: "Services", url: "services", is_active: activeUrl == "services"),
@@ -141,17 +141,17 @@ struct HomeViewModel: HomeViewModelProtocol {
         return SMHomeInfoResponse.SMContactSection(
             section_title: "Visit Our Clinic",
             items: [
-                .init(title: "📍 Location", content: "Bhagwati Smriti, Ward Number 31\nJune Bandh, Deoghar", subtitle: nil, link: nil, icon: "📍"),
-                .init(title: "📞 Phone", content: "+91 7050554772", subtitle: "Tap to call", link: "tel:7050554772", icon: "📞"),
-                .init(title: "🕐 Hours", content: "Monday - Sunday: 10:00 AM - 09:00 PM\nEmergency consultations available", subtitle: nil, link: nil, icon: "🕐"),
-                .init(title: "✉️ Email", content: "avinashamanjha.portfolio@gmail.com", subtitle: nil, link: nil, icon: "✉️")
+                .init(title: "📍 Location", content: AppConfig.address.replacingOccurrences(of: ", ", with: "\n"), subtitle: nil, link: nil, icon: "📍"),
+                .init(title: "📞 Phone", content: AppConfig.phoneNumber, subtitle: "Tap to call", link: AppConfig.phoneLink, icon: "📞"),
+                .init(title: "🕐 Hours", content: "\(AppConfig.hours)\nEmergency consultations available", subtitle: nil, link: nil, icon: "🕐"),
+                .init(title: "✉️ Email", content: AppConfig.contactEmail, subtitle: nil, link: nil, icon: "✉️")
             ]
         )
     }
 
     static func getFooter() -> SMFooter {
         return SMFooter(
-            brand_name: "Monalisha Dental Care and OPG Centre",
+            brand_name: AppConfig.brandName,
             brand_description: "Providing exceptional dental care with a personal touch. Your oral health is our commitment.",
             quick_links_title: "Quick Links",
             quick_links: [
@@ -162,14 +162,14 @@ struct HomeViewModel: HomeViewModelProtocol {
             ],
             contact_info_title: "Contact Info",
             contact_info: .init(
-                phone: "+91 7050554772",
-                phone_link: "tel:7050554772",
-                email: "avinashamanjha.portfolio@gmail.com",
-                email_link: "mailto:avinashamanjha.portfolio@gmail.com",
-                address: "Bhagwati Smriti, Ward Number 31, June Bandh, Deoghar",
-                hours: "Mon-Sun: 10:00 AM - 09:00 PM"
+                phone: AppConfig.phoneNumber,
+                phone_link: AppConfig.phoneLink,
+                email: AppConfig.contactEmail,
+                email_link: "mailto:\(AppConfig.contactEmail)",
+                address: AppConfig.address,
+                hours: AppConfig.hours
             ),
-            copyright_text: "© 2026 Monalisha Dental Care and OPG Centre. All rights reserved."
+            copyright_text: "© 2026 \(AppConfig.brandName). All rights reserved."
         )
     }
 }

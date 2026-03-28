@@ -7,7 +7,7 @@ set -e
 
 AWS_IP="3.7.95.138"
 DOMAIN_NAME="3.6.173.209"
-EMAIL="avinashamanjha.portfolio@gmail.com"  # For Let's Encrypt notifications
+EMAIL="monalishadentalcareandopgcentr@gmail.com"  # For Let's Encrypt notifications
 
 echo "🔒 Setting up HTTPS/SSL for Clinic API"
 echo "========================================"

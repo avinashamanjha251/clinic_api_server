@@ -2,7 +2,7 @@ import Vapor
 import Smtp
 
 struct EmailService {
-    static let senderEmail: String? = Environment.get(environmentKey: .SMTP_USERNAME)
+    static let senderEmail: String? = AppConfig.contactEmail
 
     static func sendConfirmationStub(appointment: SMAppointment,
                                      req: Request) {
@@ -20,7 +20,7 @@ struct EmailService {
                 <body style="font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; background-color: #ffffff;">
                     <div class="container" style="max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0;">
                         <div class="header" style="background-color: #2C5AA0; padding: 20px; text-align: center;">
-                            <h1 style="color: #ffffff; margin: 0; font-size: 24px;">🦷 Monalisha Dental Care and OPG Centre</h1>
+                            <h1 style="color: #ffffff; margin: 0; font-size: 24px;">🦷 \(AppConfig.brandName)</h1>
                         </div>
                         <div class="status-container" style="text-align: center; margin-top: -15px;">
                             <div class="status-badge" style="background-color: #3498DB; color: #ffffff; padding: 8px 20px; border-radius: 20px; display: inline-block; font-weight: bold; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">📝 REQUEST RECEIVED</div>
@@ -45,7 +45,7 @@ struct EmailService {
                             </div>
                         </div>
                         <div class="footer" style="text-align: center; padding: 20px; color: #999999; font-size: 12px;">
-                            &copy; 2026 Monalisha Dental Care and OPG Centre. All rights reserved.
+                            &copy; 2026 \(AppConfig.brandName). All rights reserved.
                         </div>
                     </div>
                 </body>
@@ -55,10 +55,10 @@ struct EmailService {
                     throw Abort(.internalServerError, reason: "Invalid Sender email")
                 }
                 let email = try Email(from: EmailAddress(address: senderEmail,
-                                                         name: "Monalisha Dental Care"),
+                                                         name: AppConfig.brandName),
                                       to: [EmailAddress(address: customerEmail,
                                                         name: appointment.name)],
-                                      subject: "Appointment Request Received - Monalisha Dental Care",
+                                      subject: "Appointment Request Received - \(AppConfig.brandName)",
                                       body: htmlBody,
                                       isBodyHtml: true)
                 
@@ -87,7 +87,7 @@ struct EmailService {
                 <body style="font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; background-color: #ffffff;">
                     <div class="container" style="max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0;">
                         <div class="header" style="background-color: #2C5AA0; padding: 20px; text-align: center;">
-                            <h1 style="color: #ffffff; margin: 0; font-size: 24px;">🦷 Monalisha Dental Care and OPG Centre</h1>
+                            <h1 style="color: #ffffff; margin: 0; font-size: 24px;">🦷 \(AppConfig.brandName)</h1>
                         </div>
                         <div class="status-container" style="text-align: center; margin-top: -15px;">
                             <div class="status-badge" style="background-color: #27AE60; color: #ffffff; padding: 8px 20px; border-radius: 20px; display: inline-block; font-weight: bold; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">✅ APPOINTMENT CONFIRMED</div>
@@ -112,7 +112,7 @@ struct EmailService {
                             </div>
                         </div>
                         <div class="footer" style="text-align: center; padding: 20px; color: #999999; font-size: 12px;">
-                            &copy; 2026 Monalisha Dental Care and OPG Centre. All rights reserved.
+                            &copy; 2026 \(AppConfig.brandName). All rights reserved.
                         </div>
                     </div>
                 </body>
@@ -122,10 +122,10 @@ struct EmailService {
                     throw Abort(.internalServerError, reason: "Invalid Sender email")
                 }
                 let email = try Email(from: EmailAddress(address: senderEmail,
-                                                         name: "Monalisha Dental Care"),
+                                                         name: AppConfig.brandName),
                                       to: [EmailAddress(address: customerEmail,
                                                         name: appointment.name)],
-                                      subject: "Appointment Confirmed - Monalisha Dental Care",
+                                      subject: "Appointment Confirmed - \(AppConfig.brandName)",
                                       body: htmlBody,
                                       isBodyHtml: true)
 
