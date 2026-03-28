@@ -30,10 +30,10 @@ fi
 chmod 600 $SSH_KEY
 
 echo "🔨 Step 1: Building Docker image locally..."
-/Applications/Docker.app/Contents/Resources/bin/docker build -t $DOCKER_IMAGE .
+docker build -t $DOCKER_IMAGE .
 
 echo "📦 Step 2: Saving Docker image to file..."
-/Applications/Docker.app/Contents/Resources/bin/docker save $DOCKER_IMAGE:latest | gzip > clinic-api-image.tar.gz
+docker save $DOCKER_IMAGE:latest | gzip > clinic-api-image.tar.gz
 
 echo "📤 Step 3: Uploading image to server..."
 echo "   This may take a few minutes depending on your internet speed..."

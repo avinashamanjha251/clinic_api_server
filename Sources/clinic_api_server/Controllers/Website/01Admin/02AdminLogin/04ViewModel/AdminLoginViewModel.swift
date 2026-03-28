@@ -6,13 +6,7 @@ struct AdminLoginViewModel: AdminLoginProtocol {
     static let baseViewModel = BaseMongoViewModel<SMAdminUserModel>()
     
     static func login(req: Request) async throws -> Response {
-        // 1. Check if authenticated via Basic Auth Middleware
-        if let _ = req.auth.get(AdminUser.self) {
-            let rootUsername = Environment.get(environmentKey: .BASIC_AUTH_USERNAME) ?? "admin"
-            return try await generateTokenForRoot(on: req, username: rootUsername)
-        }
-
-        // 2. Fallback to decoding login request JSON body
+        // 1. Decode login request JSON body
         let loginRequest: SMAdminLoginRequest
         if let decryptedData = req.decryptedBody {
             loginRequest = try JSONDecoder().decode(SMAdminLoginRequest.self, from: decryptedData)
@@ -43,11 +37,13 @@ struct AdminLoginViewModel: AdminLoginProtocol {
         user.accessToken = token
         
         if let objectId = user._id {
-            try? await baseViewModel.updateDocument(
+            let _ = try? await baseViewModel.updateDocument(
                 objectId: objectId,
                 model: user,
                 on: req,
-                ignoredKeys: [ApiKey.id, ApiKey.passwordHash, ApiKey.jwtId]
+                ignoredKeys: [ApiKey.id,
+                              ApiKey.passwordHash,
+                              ApiKey.jwtId]
             )
         }
         
