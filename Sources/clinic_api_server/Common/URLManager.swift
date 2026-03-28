@@ -8,9 +8,10 @@
 import Foundation
 import Vapor
 
-let baseURL: String = "http://127.0.0.1:8080"
-
 class URLManager {
+    static var baseURL: String {
+        Environment.get("API_BASE_URL") ?? "http://127.0.0.1:8080"
+    }
     
     enum ApiVersion: String {
         case v1 = "/api/v1/"

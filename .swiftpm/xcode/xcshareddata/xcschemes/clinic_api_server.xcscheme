@@ -117,6 +117,16 @@
             value = "FIwRjwUvVEplqNur"
             isEnabled = "YES">
          </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "JWT_SECRET"
+            value = "HGsS50xHdHx2DX0JZGLnOOBQfpUHA6HZgffPfead"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "VAPOR_ENV"
+            value = "prod"
+            isEnabled = "YES">
+         </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction

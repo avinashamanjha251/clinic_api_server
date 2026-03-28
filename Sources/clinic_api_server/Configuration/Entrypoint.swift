@@ -11,7 +11,7 @@ import Logging
 import NIOCore
 import NIOPosix
 
-let environmentType: EnvironmentType = .dev
+let environmentType: EnvironmentType = (Environment.get(environmentKey: .VAPOR_ENV) == "development") ? .dev : .prod
 let maxUploadSize = 10 * 1024 * 1024 // 10MB
 
 @main

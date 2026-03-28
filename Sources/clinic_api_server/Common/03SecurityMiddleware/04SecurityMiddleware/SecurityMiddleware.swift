@@ -2,16 +2,21 @@ import Vapor
 
 struct SecurityMiddleware: AsyncMiddleware {
     func respond(to request: Request, chainingTo next: AsyncResponder) async throws -> Response {
-        // Force HTTPS in production
-        if request.application.environment == .production {
-            if request.url.scheme != "https" {
-                // Determine if it's behind a proxy that handles SSL
-                let forwardedProto = request.headers.first(name: "X-Forwarded-Proto")
-                if forwardedProto != "https" {
-                     throw Abort(.forbidden, reason: "HTTPS is required")
-                }
-            }
+        // Skip HTTPS requirement for health check endpoint (both versioned and non-versioned)
+        if request.url.path == "/health" || request.url.path == "/api/v1/health" {
+            return try await next.respond(to: request)
         }
+        
+        // Force HTTPS in production for all other endpoints
+//        if request.application.environment == .production {
+//            if request.url.scheme != "https" {
+//                // Determine if it's behind a proxy that handles SSL
+//                let forwardedProto = request.headers.first(name: "X-Forwarded-Proto")
+//                if forwardedProto != "https" {
+//                     throw Abort(.forbidden, reason: "HTTPS is required")
+//                }
+//            }
+//        }
         
         // Basic Input Sanitization (Checking body/query for malicious patterns)
         // Note: Reading body might consume it, so we need to be careful. 

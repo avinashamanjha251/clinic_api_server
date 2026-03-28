@@ -28,6 +28,7 @@ enum EnvironmentKey: String {
     case SMTP_PORT = "SMTP_PORT"
     case SMTP_USERNAME = "SMTP_USERNAME"
     case SMTP_PASSWORD = "SMTP_PASSWORD"
+    case VAPOR_ENV = "VAPOR_ENV"
 }
 
 extension Application {
